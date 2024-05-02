@@ -1,4 +1,5 @@
-﻿using E_commerce.Core.Interfaces;
+﻿using E_commerce.Core.Entities;
+using E_commerce.Core.Interfaces;
 using E_commerce.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace E_commerce.Infrastructure.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity<int>
     {
         private readonly ApplicationDbContext _dbContext;
 
@@ -25,7 +26,7 @@ namespace E_commerce.Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(T id)
+        public async Task DeleteAsync(int id)
         {
             var entity = await _dbContext.Set<T>().FindAsync(id);
             _dbContext.Set<T>().Remove(entity);
@@ -37,14 +38,14 @@ namespace E_commerce.Infrastructure.Repositories
             return _dbContext.Set<T>().AsNoTracking().ToList();
         }
 
-        public async Task<T> GetByIdAsync(T id, params Expression<Func<T, object>>[] include)
+        public async Task<T> GetByIdAsync(int id, params Expression<Func<T, object>>[] include)
         {
-            IQueryable<T> query = _dbContext.Set<T>();
+            IQueryable<T> query = _dbContext.Set<T>().Where(X=>X.Id == id);
             foreach (var item in include)
             {
                 query = query.Include(item);
             }
-            return await ((DbSet<T>)query).FindAsync(id);
+            return await query.FirstOrDefaultAsync();
         }
 
         public async Task<IReadOnlyList<T>> GetAllAsync()
@@ -63,12 +64,12 @@ namespace E_commerce.Infrastructure.Repositories
             return await query.ToListAsync();
         }
 
-        public async Task<T> GetAsync(T id)
+        public async Task<T> GetAsync(int id)
         {
             return await _dbContext.Set<T>().FindAsync(id);
         }
 
-        public async Task UpdateAsync(T id, T entity)
+        public async Task UpdateAsync(int id, T entity)
         {
             var currentEntity = await _dbContext.Set<T>().FindAsync(id);
             if (currentEntity is not null)

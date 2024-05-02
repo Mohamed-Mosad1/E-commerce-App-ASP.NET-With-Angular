@@ -11,6 +11,7 @@ namespace E_commerce.Core.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
+        public string ProductPicture { get; set; }
 
         // Navigational Property
         public int CategoryId { get; set; }

@@ -1,14 +1,13 @@
-﻿using E_commerce.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using E_commerce.Core.Dtos;
+using E_commerce.Core.Entities;
 
 namespace E_commerce.Core.Interfaces
 {
     public interface IProductRepository : IGenericRepository<Product>
     {
         // For Future
+        Task<bool> AddAsync(CreateProductDto productDto);
+        Task<bool> UpdateAsync(int id, UpdateProductDto productDto);
+        Task<bool> DeleteWithPictureAsync(int id);
     }
 }

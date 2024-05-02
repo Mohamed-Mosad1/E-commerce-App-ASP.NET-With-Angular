@@ -1,5 +1,9 @@
 
 using E_commerce.Infrastructure;
+using Microsoft.Extensions.FileProviders;
+using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
+using System.IO;
 
 namespace E_commerce.API
 {
@@ -18,6 +22,13 @@ namespace E_commerce.API
 
             builder.Services.InfrastructureConfiquration(builder.Configuration);
 
+            // Configure AutoMapper
+            builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+            // Configure IFileProvider
+            builder.Services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -28,6 +39,8 @@ namespace E_commerce.API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
 
             app.UseAuthorization();
 

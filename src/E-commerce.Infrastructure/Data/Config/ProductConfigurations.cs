@@ -19,9 +19,9 @@ namespace E_commerce.Infrastructure.Data.Config
 
             // Seed Data
             builder.HasData(
-                new Product { Id = 1, Name = "Product One",   Description = "P1", Price = 1000, CategoryId = 1 },
-                new Product { Id = 2, Name = "Product Two",   Description = "P2", Price = 2000, CategoryId = 2 },
-                new Product { Id = 3, Name = "Product Three", Description = "P3", Price = 3000, CategoryId = 3 }
+                new Product { Id = 1, Name = "Product One",   Description = "P1", Price = 1000, CategoryId = 1, ProductPicture = "https://" },
+                new Product { Id = 2, Name = "Product Two",   Description = "P2", Price = 2000, CategoryId = 2, ProductPicture = "https://" },
+                new Product { Id = 3, Name = "Product Three", Description = "P3", Price = 3000, CategoryId = 3, ProductPicture = "https://" }
             );
 
         }
