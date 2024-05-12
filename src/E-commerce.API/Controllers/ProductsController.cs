@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using E_commerce.API.Errors;
+using E_commerce.Core.Sharing;
 using E_commerce.Core.Dtos;
 using E_commerce.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using E_commerce.API.Helpers;
 
 namespace E_commerce.API.Controllers
 {
@@ -19,12 +21,16 @@ namespace E_commerce.API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<ActionResult> GetAllProducts()
+        [HttpGet("get-all-products")]
+        public async Task<ActionResult> GetAllProducts([FromQuery] ProductParams productParams)
         {
-            var allProducts = await _unitOfWork.ProductRepository.GetAllAsync(P => P.Category);
+            //var allProducts = await _unitOfWork.ProductRepository.GetAllAsync(P => P.Category);
+            var allProducts = await _unitOfWork.ProductRepository.GetAllAsync(productParams);
+            //var totalItems = await _unitOfWork.ProductRepository.GetCountAsync();
+
             var mappedProducts = _mapper.Map<List<ProductDto>>(allProducts);
-            return Ok(mappedProducts);
+            var totalItems = mappedProducts.Count();
+            return Ok(new Pagination<ProductDto>(productParams.PageNumber, productParams.PageSize,totalItems, mappedProducts));
         }
 
         [HttpGet("productById{id}")]

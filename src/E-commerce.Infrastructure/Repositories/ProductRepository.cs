@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using E_commerce.Core.Sharing;
 using E_commerce.Core.Dtos;
 using E_commerce.Core.Entities;
 using E_commerce.Core.Interfaces;
 using E_commerce.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
 
@@ -125,7 +127,44 @@ namespace E_commerce.Infrastructure.Repositories
             return false;
         }
 
+        public async Task<IEnumerable<ProductDto>> GetAllAsync(ProductParams productParams)
+        {
+            var query = await _dbContext.Products
+                .Include(P => P.Category)
+                .AsNoTracking()
+                .ToListAsync();
 
+            // Search By Name
+            if(!string.IsNullOrEmpty(productParams.Search))
+            {
+                query = query.Where(P => P.Name.ToLower().Contains(productParams.Search)).ToList();
+            }
+
+            // Search by categoryId
+            if (productParams.CategoryId.HasValue)
+            {
+                query = query.Where(P => P.CategoryId == productParams.CategoryId.Value).ToList();
+            }
+
+
+            if (!string.IsNullOrEmpty(productParams.Sort))
+            {
+                query = productParams.Sort switch
+                {
+                    "PriceAsc" => query.OrderBy(P => P.Price).ToList(),
+                    "PriceDesc" => query.OrderByDescending(P => P.Price).ToList(),
+                    _ => query.OrderBy(P => P.Name).ToList(),
+                };
+            }
+
+            // Paging
+            query = query.Skip((productParams.PageNumber - 1) * (productParams.PageSize)).Take(productParams.PageSize).ToList();
+
+
+            var result = _mapper.Map<List<ProductDto>>(query);
+
+            return result;
+        }
 
     }
 }
