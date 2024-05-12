@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
+using E_commerce.API.Errors;
 using E_commerce.Core.Dtos;
-using E_commerce.Core.Entities;
 using E_commerce.Core.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_commerce.API.Controllers
@@ -29,9 +28,14 @@ namespace E_commerce.API.Controllers
         }
 
         [HttpGet("productById{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BaseCommonResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> GetProductById(int id)
         {
             var currentProduct = await _unitOfWork.ProductRepository.GetByIdAsync(id, P => P.Category);
+            if (currentProduct is null)
+                return NotFound(new BaseCommonResponse(404));
+
             var mappedProduct = _mapper.Map<ProductDto>(currentProduct);
             return Ok(mappedProduct);
         }
