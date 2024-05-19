@@ -66,7 +66,7 @@ namespace E_commerce.Infrastructure.Repositories
         public async Task<bool> UpdateAsync(int id, UpdateProductDto productDto)
         {
             // Update product with Image
-            var currentProduct = await _dbContext.Products.FindAsync(id);
+            var currentProduct = await _dbContext.Products.FirstOrDefaultAsync(P=>P.Id == id);
             if (currentProduct is not null)
             {
                 _mapper.Map(productDto, currentProduct);
@@ -127,8 +127,10 @@ namespace E_commerce.Infrastructure.Repositories
             return false;
         }
 
-        public async Task<IEnumerable<ProductDto>> GetAllAsync(ProductParams productParams)
+        public async Task<ReturnProductDto> GetAllAsync(ProductParams productParams)
         {
+            var result_ = new ReturnProductDto();
+
             var query = await _dbContext.Products
                 .Include(P => P.Category)
                 .AsNoTracking()
@@ -157,13 +159,14 @@ namespace E_commerce.Infrastructure.Repositories
                 };
             }
 
+            result_.TotalItems = query.Count;
+
             // Paging
             query = query.Skip((productParams.PageNumber - 1) * (productParams.PageSize)).Take(productParams.PageSize).ToList();
 
+            result_.ProductDtos = _mapper.Map<List<ProductDto>>(query);
 
-            var result = _mapper.Map<List<ProductDto>>(query);
-
-            return result;
+            return result_;
         }
 
     }

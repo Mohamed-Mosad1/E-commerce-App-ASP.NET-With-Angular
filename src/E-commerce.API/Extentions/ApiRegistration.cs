@@ -37,7 +37,7 @@ namespace E_commerce.API.Extentions
                 options.AddPolicy("CorsPolicy", policy =>
                 {
                     policy.AllowAnyHeader().AllowAnyMethod()
-                    .WithOrigins("https://localhost:4200");
+                    .WithOrigins("http://localhost:4200");
 
                 });
             });

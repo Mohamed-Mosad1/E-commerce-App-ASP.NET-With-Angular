@@ -24,13 +24,11 @@ namespace E_commerce.API.Controllers
         [HttpGet("get-all-products")]
         public async Task<ActionResult> GetAllProducts([FromQuery] ProductParams productParams)
         {
-            //var allProducts = await _unitOfWork.ProductRepository.GetAllAsync(P => P.Category);
             var allProducts = await _unitOfWork.ProductRepository.GetAllAsync(productParams);
-            //var totalItems = await _unitOfWork.ProductRepository.GetCountAsync();
 
-            var mappedProducts = _mapper.Map<List<ProductDto>>(allProducts);
-            var totalItems = mappedProducts.Count();
-            return Ok(new Pagination<ProductDto>(productParams.PageNumber, productParams.PageSize,totalItems, mappedProducts));
+            var mappedProducts = _mapper.Map<List<ProductDto>>(allProducts.ProductDtos);
+
+            return Ok(new Pagination<ProductDto>(productParams.PageNumber, productParams.PageSize,allProducts.TotalItems, mappedProducts));
         }
 
         [HttpGet("productById{id}")]

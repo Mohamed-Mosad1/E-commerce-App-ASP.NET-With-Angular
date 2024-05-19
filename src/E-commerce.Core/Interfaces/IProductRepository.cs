@@ -10,7 +10,7 @@ namespace E_commerce.Core.Interfaces
         Task<bool> AddAsync(CreateProductDto productDto);
         Task<bool> UpdateAsync(int id, UpdateProductDto productDto);
         Task<bool> DeleteWithPictureAsync(int id);
-        Task<IEnumerable<ProductDto>> GetAllAsync(ProductParams productParams);
+        Task<ReturnProductDto> GetAllAsync(ProductParams productParams);
 
     }
 }

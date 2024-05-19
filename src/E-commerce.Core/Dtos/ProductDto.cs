@@ -20,6 +20,12 @@ namespace E_commerce.Core.Dtos
         public string ProductPicture { get; set; }
     }
 
+    public class ReturnProductDto
+    {
+        public int TotalItems { get; set; }
+        public List<ProductDto> ProductDtos { get; set; }
+    }
+
     public class CreateProductDto : BaseProductDto
     {
         public int CategoryId { get; set; }
