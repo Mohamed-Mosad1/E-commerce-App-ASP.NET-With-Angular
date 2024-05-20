@@ -2,6 +2,8 @@
 using E_commerce.Infrastructure;
 using E_commerce.API.Middleware;
 using E_commerce.API.Extentions;
+using StackExchange.Redis;
+using Microsoft.IdentityModel.Protocols;
 
 namespace E_commerce.API
 {
@@ -21,6 +23,14 @@ namespace E_commerce.API
             builder.Services.AddSwaggerGen();
 
             builder.Services.InfrastructureConfiquration(builder.Configuration);
+
+            // Configure Redis
+            builder.Services.AddSingleton<IConnectionMultiplexer>(i =>
+            {
+                var config = ConfigurationOptions.Parse(builder.Configuration.GetConnectionString("Redis"), true);
+                return ConnectionMultiplexer.Connect(config);
+            });
+
 
 
             var app = builder.Build();

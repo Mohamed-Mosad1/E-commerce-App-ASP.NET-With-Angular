@@ -16,9 +16,10 @@ namespace E_commerce.Infrastructure
     {
         public static IServiceCollection InfrastructureConfiquration(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddScoped(typeof(IBasketRepository), typeof(BasketRepository));
+
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            //services.AddScoped<ICategoryRepository, CategoryRepository>();
-            //services.AddScoped<IProductRepository, ProductRepository>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Confiqurer DB
