@@ -1,9 +1,7 @@
-
 using E_commerce.Infrastructure;
 using E_commerce.API.Middleware;
 using E_commerce.API.Extentions;
 using StackExchange.Redis;
-using Microsoft.IdentityModel.Protocols;
 
 namespace E_commerce.API
 {
@@ -19,8 +17,7 @@ namespace E_commerce.API
             builder.Services.AddApiRegistration();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerServices();
 
             builder.Services.InfrastructureConfiquration(builder.Configuration);
 
@@ -38,8 +35,7 @@ namespace E_commerce.API
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerMiddleware();
             }
 
             app.UseMiddleware<ExceptionMiddleware>();
@@ -50,10 +46,13 @@ namespace E_commerce.API
             app.UseStaticFiles();
 
             app.UseCors("CorsPolicy");
-            
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
+
+            app.InfrastructureMiddleware();
 
             app.Run();
         }

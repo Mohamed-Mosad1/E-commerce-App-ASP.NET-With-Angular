@@ -1,16 +1,11 @@
 ﻿using E_commerce.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace E_commerce.Core.Interfaces
 {
     public interface IBasketRepository
     {
-        Task<CustomerBasket> GetBasketAsync(string basketId);
-        Task<CustomerBasket> UpdateBasketAsync(CustomerBasket basket);
+        Task<CustomerBasket> GetBasketByIdAsync(string basketId);
+        Task<CustomerBasket> UpdateBasketAsync(CustomerBasket basketDto);
         Task<bool> DeleteBasketAsync(string basketId);
     }
 }

@@ -16,10 +16,9 @@ namespace E_commerce.Core.Entities
         public CustomerBasket(string id)
         {
             Id = id;
-            BasketItems = new List<BasketItem>();
         }
 
         public string Id { get; set; }
-        public List<BasketItem> BasketItems { get; set; }
+        public List<BasketItem> BasketItems { get; set; } = new List<BasketItem>();
     }
 }
