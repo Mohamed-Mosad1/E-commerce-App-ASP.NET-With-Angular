@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using E_commerce.Core.Interfaces;
 using E_commerce.Infrastructure.Data;
+using E_commerce.Infrastructure.Repositories;
 using Microsoft.Extensions.FileProviders;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_commerce.Infrastructure.Repositories
+namespace E_commerce.Infrastructure
 {
     public class UnitOfWork : IUnitOfWork
     {

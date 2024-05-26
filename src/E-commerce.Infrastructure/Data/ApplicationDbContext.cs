@@ -1,5 +1,6 @@
 ﻿using E_commerce.Core.Entities;
 using E_commerce.Core.Entities.Identity;
+using E_commerce.Core.Entities.OrderAggregate;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -15,6 +16,9 @@ namespace E_commerce.Infrastructure.Data
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Address> Addresses { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderItem> OrderItems { get; set; }
+        public virtual DbSet<DeliveryMethod> DeliveryMethods { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

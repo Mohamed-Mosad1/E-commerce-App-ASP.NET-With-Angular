@@ -6,6 +6,7 @@ using E_commerce.Core.Interfaces;
 using E_commerce.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using E_commerce.Infrastructure.GenericRepository;
 
 
 namespace E_commerce.Infrastructure.Repositories

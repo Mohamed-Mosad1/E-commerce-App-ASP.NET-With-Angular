@@ -7,8 +7,6 @@ using E_commerce.Core.Services.Contract;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace E_commerce.API.Controllers
 {

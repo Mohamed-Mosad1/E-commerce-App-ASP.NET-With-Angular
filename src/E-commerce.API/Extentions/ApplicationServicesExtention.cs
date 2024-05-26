@@ -1,15 +1,17 @@
 ﻿using E_commerce.Core.Entities.Identity;
 using E_commerce.Core.Interfaces;
 using E_commerce.Core.Services.Contract;
-using E_commerce.Infrastructure.Data.Config;
 using E_commerce.Infrastructure.Data;
-using E_commerce.Infrastructure.Repositories;
 using E_commerce.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using E_commerce.Infrastructure.Basket;
+using E_commerce.Infrastructure.GenericRepository;
+using E_commerce.Infrastructure;
+using E_commerce.Infrastructure.Data.DataSeed;
 
 namespace E_commerce.API.Extentions
 {
@@ -17,6 +19,9 @@ namespace E_commerce.API.Extentions
     {
         public static IServiceCollection InfrastructureConfiquration(this IServiceCollection services, IConfiguration configuration)
         {
+            // Configure Order Service
+            services.AddScoped(typeof(IOrderService), typeof(OrderService));
+
             // Configure Token Services
             services.AddScoped(typeof(ITokenService), typeof(TokenService));
 
@@ -54,6 +59,8 @@ namespace E_commerce.API.Extentions
                         ValidateAudience = false
                     };
                 });
+
+
 
             return services;
         }

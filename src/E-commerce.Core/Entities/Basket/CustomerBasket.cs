@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_commerce.Core.Entities
+namespace E_commerce.Core.Entities.Basket
 {
     public class CustomerBasket
     {
         public CustomerBasket()
         {
-            
+
         }
 
         public CustomerBasket(string id)

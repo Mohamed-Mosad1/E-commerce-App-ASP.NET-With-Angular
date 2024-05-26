@@ -1,6 +1,7 @@
 ﻿using E_commerce.Core.Entities;
 using E_commerce.Core.Interfaces;
 using E_commerce.Infrastructure.Data;
+using E_commerce.Infrastructure.GenericRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;

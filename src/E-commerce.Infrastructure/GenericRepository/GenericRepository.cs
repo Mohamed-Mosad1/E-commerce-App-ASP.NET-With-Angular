@@ -9,7 +9,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_commerce.Infrastructure.Repositories
+namespace E_commerce.Infrastructure.GenericRepository
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity<int>
     {
@@ -40,7 +40,7 @@ namespace E_commerce.Infrastructure.Repositories
 
         public async Task<T> GetByIdAsync(int id, params Expression<Func<T, object>>[] include)
         {
-            IQueryable<T> query = _dbContext.Set<T>().Where(X=>X.Id == id);
+            IQueryable<T> query = _dbContext.Set<T>().Where(X => X.Id == id);
             foreach (var item in include)
             {
                 query = query.Include(item);
@@ -81,7 +81,7 @@ namespace E_commerce.Infrastructure.Repositories
 
         public async Task<int> GetCountAsync()
         {
-           return await _dbContext.Set<T>().CountAsync();
+            return await _dbContext.Set<T>().CountAsync();
         }
     }
 }

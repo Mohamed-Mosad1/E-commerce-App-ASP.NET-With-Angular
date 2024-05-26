@@ -1,4 +1,4 @@
-﻿using E_commerce.Core.Entities;
+﻿using E_commerce.Core.Entities.Basket;
 
 namespace E_commerce.Core.Interfaces
 {

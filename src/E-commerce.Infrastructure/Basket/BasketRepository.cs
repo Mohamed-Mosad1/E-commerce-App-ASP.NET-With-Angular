@@ -1,9 +1,9 @@
-﻿using E_commerce.Core.Entities;
+﻿using E_commerce.Core.Entities.Basket;
 using E_commerce.Core.Interfaces;
 using StackExchange.Redis;
 using System.Text.Json;
 
-namespace E_commerce.Infrastructure.Repositories
+namespace E_commerce.Infrastructure.Basket
 {
     public class BasketRepository : IBasketRepository
     {

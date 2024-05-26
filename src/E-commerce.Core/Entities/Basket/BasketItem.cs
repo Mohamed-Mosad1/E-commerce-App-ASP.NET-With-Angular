@@ -1,4 +1,4 @@
-﻿namespace E_commerce.Core.Entities
+﻿namespace E_commerce.Core.Entities.Basket
 {
     public class BasketItem
     {

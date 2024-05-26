@@ -16,10 +16,11 @@ namespace E_commerce.API.Helpers
         {
             if(!string.IsNullOrEmpty(source.ProductPicture)) 
             {
-                return _configuration["BaseApiUrl"] + source.ProductPicture;
+                return $"{_configuration["BaseApiUrl"]}/{source.ProductPicture}";
+
             }
 
-            return null;
+            return string.Empty;
         }
     }
 }
